@@ -7,6 +7,12 @@ const db = require('./models');
 const User = db.User;
 
 /*==========================
+==========JADE SET==========*/
+app.set('view engine', 'jade');
+app.set('views', './templates');
+/*============================*/
+
+/*==========================
 ===========ROUTES===========*/
 const gallery = require('./routes/gallery');
 /*==========================*/

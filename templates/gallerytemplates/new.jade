@@ -1,0 +1,16 @@
+h1 Add an article!
+form(action='/articles' method='post')
+  div
+    label(for='title') Title
+    input(type='text' name='title' placeholder='required field' id='title')
+
+  div
+    label(for='author') Author
+    input(type='text' name='author' placeholder='required field' id='author')
+
+  div
+    label(for='body') Body
+    textarea(id='body' placeholder='required field' name='body')
+
+  div.button
+    button(type='submit') Send
