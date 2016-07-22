@@ -18,18 +18,27 @@ Router.use(bodyParser.json());
 Router.route('/')
 /* to view a list of gallery photos */
   .get( ( req, res ) => {
-    res.render('./gallerytemplates/index', {
-      photos: fakeDB.getAll()
+    db.Gallery.all()
+    .then(function(gallery){
+      console.log('gallery', gallery);
+    })
+    .catch( (err) => {
+      console.log('ERR', err);
     });
-    /*res.send('hi gallery get');*/
+/*    res.render('./gallerytemplates/index', {
+      photos: fakeDB.getAll()
+    });*/
+    res.send({success: true});
   })
 /* to create a new gallery photo */
   .post( ( req, res ) => {
-    fakeDB.addItem(req.body);
-    console.log('req ', req);
-    console.log('req.body ', req.body);
+    db.Gallery.create({
+      author: req.body.author,
+      link: req.body.link,
+      description: req.body.description
+    });
+    /*fakeDB.addItem(req.body);*/
     res.send({success: true});
-    console.log(fakeDB.getAll());
   });
 
 Router.route('/:id')

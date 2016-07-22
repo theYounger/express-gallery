@@ -20,6 +20,7 @@
   "homepage": "https://github.com/theYounger/express-gallery#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "express": "^4.14.0",
     "jade": "^1.11.0",
     "pg": "^6.0.3",
     "pg-hstore": "^2.3.2",

@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/gallery', gallery);
 
-app.post('/users', function (req, res) {
+/*app.post('/users', function (req, res) {
   User.create({ username: req.body.username} )
     .then(function (user) {
       res.json(user);
@@ -33,7 +33,7 @@ app.get('/users', (req, res) => {
   .then((users) => {
     res.json(users);
   });
-});
+});*/
 
 
 const server = app.listen(3000, () => {
