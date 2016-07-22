@@ -1,0 +1,17 @@
+h1 Edit an article here!
+form(action='/articles/#{editTitleEncoded}' method='POST')
+  input(type='hidden' value='PUT' name='_method')
+  div
+    label(for='title') Title
+    input(type='text' value='#{editTitle}' id='title' name='title')
+
+  div
+    label(for='author') Author
+    input(type='text' value='#{editAuthor}' id='author' name='author')
+
+  div
+    label(for='body') Body
+    textarea(id='body' name='body') #{editBody}
+
+  div.button
+    button(type='submit') Send
