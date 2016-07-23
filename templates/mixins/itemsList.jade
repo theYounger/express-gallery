@@ -1,9 +1,7 @@
 mixin galleryList(photos)
-  ul
+  .galleryList
     each photo in photos
-      li
-        //- a(href=`/gallery/${req.params.id}`)
-        p Photo Name
-        img(src="#{photo.link}")
-
-      //- li Photo Name img(src=`https://s-media-cache-ak0.pinimg.com/736x/d5/20/6f/d5206f766057f109aa35eb7de675c57d.jpg`)
+      div.insideCells
+        a(href='/gallery/#{photo.id}')
+          img(src="#{photo.link}")
+          p Photo Name

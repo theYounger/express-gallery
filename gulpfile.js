@@ -6,7 +6,8 @@ var sass        = require('gulp-sass');
 gulp.task('serve', ['sass'], function() {
 
   browserSync.init({
-      server: "./public"
+/*      server: "./public"*/
+        proxy: 'localhost:3000'
   });
 
   gulp.watch("scss/**/*.scss", ['sass']);
