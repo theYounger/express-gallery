@@ -12,6 +12,8 @@ app.set('view engine', 'jade');
 app.set('views', './templates');
 /*============================*/
 
+app.use(express.static('public'));
+
 /*==========================
 ===========ROUTES===========*/
 const gallery = require('./routes/gallery');
