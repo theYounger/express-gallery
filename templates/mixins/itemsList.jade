@@ -2,6 +2,7 @@ mixin galleryList(photos)
   ul
     each photo in photos
       li
+        //- a(href=`/gallery/${req.params.id}`)
         p Photo Name
         img(src="#{photo.link}")
 

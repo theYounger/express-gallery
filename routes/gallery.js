@@ -44,25 +44,36 @@ Router.route('/')
 Router.route('/:id')
 /*  to see a single gallery photo */
   .get( (req, res) => {
-    res.send('hi gallery/:id get');
+    db.Gallery.findAll(
+    {where: {id: req.params.id}})
+    .then(function(image){
+      console.log('image', image);
+      res.render('./gallerytemplates/picpage', {
+        photos: image[0].dataValues.link
+      });
+    })
+    .catch( (err) => {
+      console.log('ERR', err);
+    });
   })
+
 /*  updates a single gallery photo identified by the :id param */
   .put( ( req, res ) => {
     res.send('hi gallery/:id put');
   })
 /* to delete a single gallery photo identified by the :id param */
   .delete ( ( req, res ) => {
-    db.post.destroy({
-      where : {
-        id : req.params.id
-      }
-    })
-    .then(function(){
-      // then redirect to gallery
-      res.redirect('/gallery');
+    db.Gallery.destroy(
+      {where: {id: req.params.id}})
+      .then(function(gallery){
+        res.render('./gallerytemplates/index', {
+          photos: gallery
+        });
+      })
+      .catch( (err) => {
+        console.log('ERR', err);
+      });
     });
-    // res.send('hi gallery/:id delete');
-  });
 
 /*  to see a "new photo" form */
 Router.get( '/new', ( req, res ) => {
