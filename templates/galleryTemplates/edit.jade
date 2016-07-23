@@ -19,6 +19,11 @@ form(action='/gallery/#{photoId}' method='POST')
   div.button
     button(type='submit') Send
 
+form(action='/gallery/#{photoId}' method='POST')
+  input(type='hidden' value='DELETE' name='_method')
+
+  div.button
+    button(type='submit') DELETE
     //- value='#{editTitle}'
     //- value='#{editAuthor}'
     //- #{editBody}

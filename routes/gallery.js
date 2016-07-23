@@ -107,6 +107,7 @@ Router.get( '/:id/edit', ( req, res ) => {
     .then(function(image){
       console.log('image', image);
       res.render('./galleryTemplates/edit', {
+        photoId: image[0].dataValues.id,
         photoLink: image[0].dataValues.link
       });
     })
