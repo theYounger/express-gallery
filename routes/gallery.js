@@ -18,18 +18,19 @@ Router.use(bodyParser.json());
 Router.route('/')
 /* to view a list of gallery photos */
   .get( ( req, res ) => {
-    db.Gallery.all()
+  db.Gallery.findAll({
+    attributes: ['link']
+    })
     .then(function(gallery){
-      console.log('gallery', gallery);
+      res.render('./gallerytemplates/index', {
+        photos: gallery
+      });
     })
     .catch( (err) => {
       console.log('ERR', err);
     });
-/*    res.render('./gallerytemplates/index', {
-      photos: fakeDB.getAll()
-    });*/
-    res.send({success: true});
   })
+
 /* to create a new gallery photo */
   .post( ( req, res ) => {
     db.Gallery.create({
@@ -37,7 +38,6 @@ Router.route('/')
       link: req.body.link,
       description: req.body.description
     });
-    /*fakeDB.addItem(req.body);*/
     res.send({success: true});
   });
 
