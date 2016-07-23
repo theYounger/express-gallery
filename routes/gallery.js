@@ -60,7 +60,8 @@ Router.route('/:id')
     .then(function(image){
       console.log('image', image);
       res.render('./galleryTemplates/picpage', {
-        photos: image[0].dataValues.link
+        photos: image[0].dataValues.link,
+        photoId: req.params.id
       });
     })
     .catch( (err) => {
@@ -76,12 +77,12 @@ Router.route('/:id')
         for (var key in req.body) {
           selectRow[key] = req.body[key];
         }
-      db.Gallery.update(selectRow, {where: { id: req.params.id }})
-        .then(function (result) {
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        db.Gallery.update(selectRow, {where: { id: req.params.id }})
+          .then(function (result) {
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
   })
 /* to delete a single gallery photo identified by the :id param */
@@ -101,9 +102,17 @@ Router.route('/:id')
 
 /*  to see a form to edit a gallery photo identified by the :id param */
 Router.get( '/:id/edit', ( req, res ) => {
-  res.render('./galleryTemplates/edit', {
-    photoId: req.params.id
-  });
+  db.Gallery.findAll(
+    {where: {id: req.params.id}})
+    .then(function(image){
+      console.log('image', image);
+      res.render('./galleryTemplates/edit', {
+        photoLink: image[0].dataValues.link
+      });
+    })
+    .catch( (err) => {
+      console.log('ERR', err);
+    });
 });
 
 module.exports = Router;
