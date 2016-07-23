@@ -1,0 +1,21 @@
+h1 Edit a photo here!
+form(action='/gallery/#{photoId}' method='POST')
+  input(type='hidden' value='PUT' name='_method')
+  div
+    label(for='author') Author
+    input(type='text' id='author' name='author')
+
+  div
+    label(for='link') Link
+    input(type='text' id='link' name='link')
+
+  div
+    label(for='desc') Description
+    textarea(id='desc' name='description')
+
+  div.button
+    button(type='submit') Send
+
+    //- value='#{editTitle}'
+    //- value='#{editAuthor}'
+    //- #{editBody}
