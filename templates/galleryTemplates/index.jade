@@ -2,9 +2,9 @@ html
   head
     link(rel='stylesheet', href='/css/styles.css')
 
+block gallContent
   body
+    include ../partials/header
     include ../mixins/itemsList
-
-    h1 Express Gallery
     div
       mixin galleryList(photos)

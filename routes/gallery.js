@@ -28,7 +28,8 @@ Router.route('/')
     })
     .then(function(gallery){
       res.render('./galleryTemplates/index', {
-        photos: gallery
+        photos: gallery,
+        photoId: req.params.id
       });
     });
   })

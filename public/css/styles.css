@@ -1,4 +1,42 @@
 body {
-  background-color: red; }
+  background-color: green;
+  text-align: center;
+  /* align-items: center; */ }
   body h1 {
-    color: yellow; }
+    color: yellow;
+    font-family: Arial;
+    font-size: 4em; }
+  body a:link {
+    color: #FF0000;
+    text-decoration: none; }
+  body a:visited {
+    color: #00FF00; }
+  body a:hover {
+    color: #FF00FF; }
+  body a:active {
+    color: #0000FF; }
+
+.galleryList {
+  background-color: blue;
+  text-align: center;
+  /* align-items: center; */
+  /* justify-content: space-between;
+  width: 33%; */
+  display: flex;
+  flex-flow: row wrap; }
+  .galleryList div {
+    background-color: navy;
+    text-align: center;
+    flex: 1  1  auto; }
+
+.header1 {
+  background-color: #0000FF;
+  display: flex;
+  flex-flow: row wrap;
+  flex: 1  1  auto; }
+
+.header2 {
+  background-color: #00FF00;
+  display: flex;
+  flex-flow: row wrap;
+  flex: 1  1  auto; }
