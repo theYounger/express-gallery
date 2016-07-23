@@ -1,5 +1,10 @@
-include ../mixins/itemsList
+html
+  head
+    link(rel='stylesheet', href='/css/styles.css')
 
-h1 Express Gallery
-div
-  mixin galleryList(photos)
+  body
+    include ../mixins/itemsList
+
+    h1 Express Gallery
+    div
+      mixin galleryList(photos)

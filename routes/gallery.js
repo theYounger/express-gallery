@@ -7,11 +7,10 @@ const db = require('../models');
 
 /*==========================
 ==========MIDDLEWARE========*/
-Router.use(bodyParser.urlencoded({ extended: true }));
 Router.use(bodyParser.json());
+Router.use(bodyParser.urlencoded({ extended: true }));
 Router.use(methodOverride(function(req, res){
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    // look in urlencoded POST bodies and delete it
     var method = req.body._method;
     delete req.body._method;
     return method;
@@ -21,7 +20,6 @@ Router.use(methodOverride(function(req, res){
 
 
 /*----------  ROUTES  ----------*/
-
 Router.route('/')
 /* to view a list of gallery photos */
   .get( ( req, res ) => {
@@ -32,9 +30,6 @@ Router.route('/')
       res.render('./galleryTemplates/index', {
         photos: gallery
       });
-    })
-    .catch( (err) => {
-      console.log('ERR', err);
     });
   })
 
@@ -45,9 +40,9 @@ Router.route('/')
       link: req.body.link,
       description: req.body.description
     });
-    res.send({success: true});
   });
 
+/*  to see a "new photo" form */
 Router.get( '/new', ( req, res ) => {
   res.render('./galleryTemplates/new');
 });
@@ -58,17 +53,12 @@ Router.route('/:id')
     db.Gallery.findAll(
     {where: {id: req.params.id}})
     .then(function(image){
-      console.log('image', image);
       res.render('./galleryTemplates/picpage', {
         photos: image[0].dataValues.link,
         photoId: req.params.id
       });
-    })
-    .catch( (err) => {
-      console.log('ERR', err);
     });
   })
-
 /*  updates a single gallery photo identified by the :id param */
   .put( ( req, res ) => {
     let selectRow = {};
@@ -79,9 +69,6 @@ Router.route('/:id')
         }
         db.Gallery.update(selectRow, {where: { id: req.params.id }})
           .then(function (result) {
-          })
-          .catch((err) => {
-            console.log(err);
           });
       });
   })
@@ -92,13 +79,8 @@ Router.route('/:id')
         res.render('./galleryTemplates/index', {
           photos: gallery
         });
-      })
-      .catch( (err) => {
-        console.log('ERR', err);
       });
     });
-
-/*  to see a "new photo" form */
 
 /*  to see a form to edit a gallery photo identified by the :id param */
 Router.get( '/:id/edit', ( req, res ) => {
@@ -107,11 +89,9 @@ Router.get( '/:id/edit', ( req, res ) => {
     .then(function(image){
       console.log('image', image);
       res.render('./galleryTemplates/edit', {
+        photoId: image[0].dataValues.id,
         photoLink: image[0].dataValues.link
       });
-    })
-    .catch( (err) => {
-      console.log('ERR', err);
     });
 });
 

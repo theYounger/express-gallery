@@ -3,9 +3,9 @@ module.exports = function(sequelize, DataTypes) {
     username: DataTypes.STRING
   }, {
     classMethods: {
-      associate: function(models) {
-        User.hasMany(models.Task)
-      }
+      // associate: function(models) {
+      //   User.hasMany(models.Task)
+      // }
     }
   });
 
