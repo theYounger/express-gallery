@@ -1,4 +1,7 @@
 h1 Edit a photo here!
+
+img(src="#{photoLink}")
+
 form(action='/gallery/#{photoId}' method='POST')
   input(type='hidden' value='PUT' name='_method')
   div
