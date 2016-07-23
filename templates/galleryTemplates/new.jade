@@ -1,0 +1,16 @@
+h1 Add a photo!
+form(action='/gallery' method='post')
+  div
+    label(for='author') Author
+    input(type='text' name='author' placeholder='entry field' id='author')
+
+  div
+    label(for='link') Link
+    input(type='text' name='link' placeholder='required field' id='link')
+
+  div
+    label(for='desc') Description
+    textarea(id='desc' placeholder='entry field' name='desc')
+
+  div.button
+    button(type='submit') Send

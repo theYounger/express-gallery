@@ -1,19 +1,26 @@
 const express = require('express');
 const Router = express.Router();
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
 const db = require('../models');
 
-const fakeDB = require('../db/galleryModel');
-
+/*==========================
+==========MIDDLEWARE========*/
 Router.use(bodyParser.urlencoded({ extended: true }));
 Router.use(bodyParser.json());
+Router.use(methodOverride(function(req, res){
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
+/*==========================*/
 
-/*function addItem(req, res) {
-   db.query("insert into products(name, price, inventory) values($1, $2, $3)", [req.body.name, req.body.price, req.body.inventory])
-    .then(console.log)
-    .catch(console.log);
-  }*/
+
+/*----------  ROUTES  ----------*/
 
 Router.route('/')
 /* to view a list of gallery photos */
@@ -22,7 +29,7 @@ Router.route('/')
     attributes: ['link']
     })
     .then(function(gallery){
-      res.render('./gallerytemplates/index', {
+      res.render('./galleryTemplates/index', {
         photos: gallery
       });
     })
@@ -41,6 +48,10 @@ Router.route('/')
     res.send({success: true});
   });
 
+Router.get( '/new', ( req, res ) => {
+  res.render('./galleryTemplates/new');
+});
+
 Router.route('/:id')
 /*  to see a single gallery photo */
   .get( (req, res) => {
@@ -48,7 +59,7 @@ Router.route('/:id')
     {where: {id: req.params.id}})
     .then(function(image){
       console.log('image', image);
-      res.render('./gallerytemplates/picpage', {
+      res.render('./galleryTemplates/picpage', {
         photos: image[0].dataValues.link
       });
     })
@@ -59,14 +70,25 @@ Router.route('/:id')
 
 /*  updates a single gallery photo identified by the :id param */
   .put( ( req, res ) => {
-    res.send('hi gallery/:id put');
+    let selectRow = {};
+    db.Gallery.findAll({where: {id: req.params.id}})
+      .then (() => {
+        for (var key in req.body) {
+          selectRow[key] = req.body[key];
+        }
+      db.Gallery.update(selectRow, {where: { id: req.params.id }})
+        .then(function (result) {
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      });
   })
 /* to delete a single gallery photo identified by the :id param */
   .delete ( ( req, res ) => {
-    db.Gallery.destroy(
-      {where: {id: req.params.id}})
+    db.Gallery.destroy({where: {id: req.params.id}})
       .then(function(gallery){
-        res.render('./gallerytemplates/index', {
+        res.render('./galleryTemplates/index', {
           photos: gallery
         });
       })
@@ -76,13 +98,12 @@ Router.route('/:id')
     });
 
 /*  to see a "new photo" form */
-Router.get( '/new', ( req, res ) => {
-  res.send('hi gallery/new get');
-});
 
 /*  to see a form to edit a gallery photo identified by the :id param */
 Router.get( '/:id/edit', ( req, res ) => {
-  res.send('hi gallery/:id/edit get');
+  res.render('./galleryTemplates/edit', {
+    photoId: req.params.id
+  });
 });
 
 module.exports = Router;
