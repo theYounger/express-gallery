@@ -51,16 +51,28 @@ Router.get( '/new', ( req, res ) => {
 
 Router.route('/:id')
 /*  to see a single gallery photo */
-  .get( (req, res) => {
-    db.Gallery.findAll(
-    {where: {id: req.params.id}})
-    .then(function(image){
-      res.render('./galleryTemplates/picpage', {
-        photos: image[0].dataValues.link,
-        photoId: req.params.id
-      });
-    });
+.get( (req, res) => {
+  db.Gallery.findAll({where:
+    {
+      id: {
+        $between: [req.params.id - 2, req.params.id + 1]
+      }
+    }
   })
+  .then(function(image){
+    const imageMap = image.map((element) => {
+      return element.dataValues.link;
+    });
+    console.log('imageMap', imageMap);
+    res.render('./galleryTemplates/picpage', {
+      main: imageMap[2],
+      mainId: req.params.id,
+      co1: imageMap[0],
+      co2: imageMap[1],
+      co3: imageMap[3]
+    });
+  });
+})
 /*  updates a single gallery photo identified by the :id param */
   .put( ( req, res ) => {
     let selectRow = {};

@@ -1,9 +1,13 @@
 include ../partials/header
 
 body
-  img(src="#{photos}")
+  div.wrapper
+    div.aside.aside-1
+      img(src="#{main}")
+      form(method='get' action='/gallery/#{mainId}/edit')
+        button(type='submit') EDIT
 
-form(method='get' action='/gallery/#{photoId}/edit')
-  button(type='submit') EDIT
-
-
+    div.aside.aside-2
+      img.co(src="#{co1}")
+      img.co(src="#{co2}")
+      img.co(src="#{co3}")
