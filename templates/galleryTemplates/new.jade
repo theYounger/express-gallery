@@ -1,3 +1,5 @@
+include ../partials/header
+
 h1 Add a photo!
 form(action='/gallery' method='post')
   div
@@ -10,7 +12,7 @@ form(action='/gallery' method='post')
 
   div
     label(for='desc') Description
-    textarea(id='desc' placeholder='entry field' name='desc')
+    textarea(id='desc' placeholder='entry field' name='description')
 
   div.button
     button(type='submit') Send

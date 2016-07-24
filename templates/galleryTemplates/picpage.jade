@@ -1,12 +1,7 @@
-html
-  head
-    link(rel='stylesheet', href='/css/styles.css')
+include ../partials/header
 
 body
-  include ../partials/header
-
-img(src="#{photos}")
-
+  img(src="#{photos}")
 
 form(method='get' action='/gallery/#{photoId}/edit')
   button(type='submit') EDIT

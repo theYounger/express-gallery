@@ -1,31 +1,78 @@
-body {
-  background-color: green;
-  text-align: center;
-  /* align-items: center; */
+*{
+  font-family: 'Rajdhani', sans-serif;
+  text-align:center;
+}
 
-  h1 {
-    color: yellow;
-    font-family: Arial;
+body {
+  color: #FFFFFF;
+  background-color: #0B486B;
+  text-align: center;
+/*   display:flex;
+  flex-flow: row wrap; */
+  align-items: center;
+
+  span.titleBox {
+    color: #CFF09E;
     font-size: 4em;
+    font-weight: 700;
+    border: 3px solid #CFF09E;
+    border-radius: 0%;
+  }
+
+  span.noBlink {
+    color: #FFFFFF;
+    animation: none;
+    margin: 5% 5% 5% 0;
+  }
+  @keyframes blinker {
+    50% { opacity: 0.0; }
+  }
+
+  span.blink{
+    color:#DC143C;
+    animation: blinker 1s linear infinite;
+    margin: 5% 0 5% 5%;
   }
 
   a:link {
-      color: #FF0000;
-      text-decoration: none;
+    color: #FFFFFF;
+    text-decoration: none;
   }
   a:visited {
-      color: #00FF00;
+    color: #FFFFFF;
   }
   a:hover {
-      color: #FF00FF;
+    color: #DCDCDC;
   }
   a:active {
-      color: #0000FF;
+    color: #0B486B;
   }
 }
 
+.insideCells {
+  width: 25%;
+}
+
+.image {
+  object-fit: cover;
+  border-radius: 10%;
+  min-height: 400px;
+  max-height: 400px;
+  min-width: 400px;
+  max-width: 400px;
+}
+
+.image:hover {
+  opacity: 0.9;
+  object-fit: cover;
+  border-radius: 10%;
+  min-height: 400px;
+  max-height: 400px;
+  min-width: 400px;
+  max-width: 400px;
+}
+
 .galleryList{
-  background-color:blue;
   text-align: center;
   /* align-items: center; */
   /* justify-content: space-between;
@@ -36,22 +83,53 @@ body {
   }
 
   div {
-    background-color: navy;
+    background-color: #0B486B;
     text-align: center;
-    flex: 1  1  auto;
+    flex: 1 1 auto;
   }
 }
 
-.header1{
-  background-color: #0000FF;
+.headerZero{
+  /* text-align: center; */
+  flex: 1 1 auto;
   display:flex;
   flex-flow: row wrap;
-      flex: 1  1  auto;
+  /* display: inline-block; */
+  padding: 25px 25px 25px 25px;
+}
+
+.header1{
+  /* background-color: #191970; */
+  display: inline-block;
+  flex: 1 1 45%;
+  margin: auto;
 }
 
 .header2{
-  background-color: #00FF00;
-  display:flex;
-  flex-flow: row wrap;
-      flex: 1  1  auto;
+  color: #ffffff;
+  /* background-color: #000000; */
+  display: inline-block;
+  flex: 1 1 50%;
+  margin: auto;
 }
+
+.photoName{
+  font-weight: 900;
+  font-size: 2em;
+  margin: 5px;
+}
+
+.photoDescription{
+  font-weight: 700;
+  margin: 0px;
+}
+
+.photoDate{
+  font-weight: 700;
+  margin: 0px 0px 10px 0px;
+}
+
+label{
+  margin: 10px;
+}
+
