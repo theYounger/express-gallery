@@ -8,7 +8,8 @@ body {
   text-align: center;
   /*   display:flex;
   flex-flow: row wrap; */
-  align-items: center; }
+  align-items: center;
+  padding: 2em; }
   body span.titleBox {
     color: #CFF09E;
     font-size: 4em;
@@ -67,7 +68,7 @@ body {
   .galleryList div {
     background-color: #0B486B;
     text-align: center;
-    flex: 1 1 auto; }
+    /* flex: 1 1 auto; */ }
 
 .headerZero {
   /* text-align: center; */
@@ -105,3 +106,51 @@ body {
 
 label {
   margin: 10px; }
+
+/*=============================================
+=                PICTURE PAGE                =
+=============================================*/
+.wrapper {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  margin-bottom: -50%; }
+
+.wrapper > * {
+  padding: 10px;
+  flex: 1 100%; }
+
+.aside-1 > img {
+  justify-content: flex-start;
+  object-fit: cover;
+  border-radius: 10px;
+  min-height: 500px;
+  max-height: 500px;
+  min-width: 700px;
+  max-width: 700px; }
+
+@media all and (min-width: 600px) {
+  .aside {
+    flex: 1 auto; } }
+
+@media all and (min-width: 800px) {
+  .aside-1 {
+    order: 1; }
+  .aside-2 {
+    order: 2; } }
+
+.co {
+  display: block;
+  object-fit: cover;
+  padding-top: 1%;
+  border-radius: 10px;
+  min-height: 150px;
+  max-height: 150px;
+  min-width: 300px;
+  max-width: 300px; }
+
+/*=====  End of Section PICTURE PAGE  ======*/
