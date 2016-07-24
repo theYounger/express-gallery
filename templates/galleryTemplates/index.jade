@@ -1,10 +1,7 @@
-html
-  head
-    link(rel='stylesheet', href='/css/styles.css')
+include ../partials/header
+include ../mixins/itemsList
 
 block gallContent
   body
-    include ../partials/header
-    include ../mixins/itemsList
     div
       mixin galleryList(photos)

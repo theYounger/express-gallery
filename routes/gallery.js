@@ -23,13 +23,14 @@ Router.use(methodOverride(function(req, res){
 Router.route('/')
 /* to view a list of gallery photos */
   .get( ( req, res ) => {
+    console.log(req);
   db.Gallery.findAll({
-    attributes: ['link']
+    attributes: ['id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
     })
     .then(function(gallery){
       res.render('./galleryTemplates/index', {
         photos: gallery,
-        photoId: req.params.id
+        /*photoId: req.params.id*/
       });
     });
   })
