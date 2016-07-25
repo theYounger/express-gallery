@@ -65,6 +65,7 @@ Router.route('/:id')
       return element.dataValues.link;
     });
     console.log('imageMap', imageMap);
+    console.log(req.body);
     res.render('./galleryTemplates/picpage', {
       main: imageMap[2],
       mainId: req.params.id,

@@ -4,8 +4,11 @@ body
   div.wrapper
     div.aside.aside-1
       img(src="#{main}")
+      p #{mainId}
+      p #{mainAuth}
+      p #{mainDescription}
       form(method='get' action='/gallery/#{mainId}/edit')
-        button(type='submit') EDIT
+        button.btnBlue(type='submit') EDIT
 
     div.aside.aside-2
       img.co(src="#{co1}")
