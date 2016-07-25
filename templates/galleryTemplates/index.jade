@@ -1,7 +1,16 @@
 include ../partials/header
 include ../mixins/itemsList
 
+
 block gallContent
-  body
+  .bodyClass
     div
       mixin galleryList(photos)
+
+div
+  div.buttonOne
+    form.index(method='get' action='/gallery/new')
+      button.btn.btn-primary(type='submit') NEW POST
+  div.buttonTwo
+    form.index(method='get' action='/gallery/new')
+      button.btn.btn-danger(type='submit') LOG OUT

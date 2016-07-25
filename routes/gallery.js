@@ -52,7 +52,8 @@ Router.get( '/new', ( req, res ) => {
 Router.route('/:id')
 /*  to see a single gallery photo */
 .get( (req, res) => {
-  db.Gallery.findAll({where:
+  db.Gallery.findAll(
+    {where:
     {
       id: {
         $between: [req.params.id - 2, req.params.id + 1]
