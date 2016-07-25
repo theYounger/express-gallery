@@ -2,7 +2,7 @@ const express = require('express');
 const Router = express.Router();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-
+const midware = require('../lib/middleware');
 const db = require('../models');
 
 /*==========================
@@ -52,26 +52,24 @@ Router.get( '/new', ( req, res ) => {
 Router.route('/:id')
 /*  to see a single gallery photo */
 .get( (req, res) => {
-  db.Gallery.findAll(
-    {where:
-    {
-      id: {
-        $between: [req.params.id - 2, req.params.id + 1]
-      }
-    }
+  db.Gallery.findAll({
+    attributes: ['id', 'link']
   })
   .then(function(image){
     const imageMap = image.map((element) => {
-      return element.dataValues.link;
+      return {
+        link: element.dataValues.link,
+        id: element.dataValues.id
+      };
     });
-    console.log('imageMap', imageMap);
-    res.render('./galleryTemplates/picpage', {
-      main: imageMap[2],
-      mainId: req.params.id,
-      co1: imageMap[0],
-      co2: imageMap[1],
-      co3: imageMap[3]
+    let mainIndex;
+    imageMap.forEach((ele, ind) => {
+      if(ele.id == req.params.id){
+        mainIndex = ind;
+      }
     });
+    console.log(mainIndex, 'mainIndex');
+    midware(req, res, mainIndex, imageMap);
   });
 })
 /*  updates a single gallery photo identified by the :id param */
@@ -102,7 +100,6 @@ Router.get( '/:id/edit', ( req, res ) => {
   db.Gallery.findAll(
     {where: {id: req.params.id}})
     .then(function(image){
-      console.log('image', image);
       res.render('./galleryTemplates/edit', {
         photoId: image[0].dataValues.id,
         photoLink: image[0].dataValues.link
@@ -110,4 +107,24 @@ Router.get( '/:id/edit', ( req, res ) => {
     });
 });
 
+// function getPics(prox, req) {
+//   return function(ele, ind, arr) {
+//     var found = false;
+//     var count = 0;
+//     do {
+//       if(ele.id === req.params.id - count) {
+//         return ele
+//       }
+//     } while(!found);
+//     })
+//   };
+// }
+
 module.exports = Router;
+
+   // {where:
+   //  {
+   //    id: {
+   //      $between: [req.params.id, req.params.id + 1]
+   //    }
+   //  }
