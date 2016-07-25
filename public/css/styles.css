@@ -44,25 +44,25 @@ body {
 .image {
   object-fit: cover;
   border-radius: 10%;
-  min-height: 400px;
-  max-height: 400px;
-  min-width: 400px;
-  max-width: 400px; }
+  min-height: 300px;
+  max-height: 300px;
+  min-width: 300px;
+  max-width: 300px; }
 
 .image:hover {
   opacity: 0.9;
   object-fit: cover;
   border-radius: 10%;
-  min-height: 400px;
-  max-height: 400px;
-  min-width: 400px;
-  max-width: 400px; }
+  min-height: 300px;
+  max-height: 300px;
+  min-width: 300px;
+  max-width: 300px; }
 
 .galleryList {
   text-align: center;
+  justify-content: space-between;
   /* align-items: center; */
-  /* justify-content: space-between;
-  width: 33%; */
+  /* width: 33%; */
   display: flex;
   flex-flow: row wrap; }
   .galleryList div {
@@ -89,7 +89,8 @@ body {
   /* background-color: #000000; */
   display: inline-block;
   flex: 1 1 50%;
-  margin: auto; }
+  margin: auto;
+  font-weight: 700; }
 
 .photoName {
   font-weight: 900;
@@ -106,6 +107,25 @@ body {
 
 label {
   margin: 10px; }
+
+div.buttonOne {
+  background-color: #0B486B;
+  text-align: center;
+  display: inline-block; }
+
+div.buttonTwo {
+  background-color: #0B486B;
+  text-align: center;
+  display: inline-block; }
+
+form {
+  margin: 15px 0px 15px 0px; }
+
+input {
+  text-align: left; }
+
+textarea {
+  text-align: left; }
 
 /*=============================================
 =                PICTURE PAGE                =

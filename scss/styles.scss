@@ -57,27 +57,27 @@ body {
 .image {
   object-fit: cover;
   border-radius: 10%;
-  min-height: 400px;
-  max-height: 400px;
-  min-width: 400px;
-  max-width: 400px;
+  min-height: 300px;
+  max-height: 300px;
+  min-width: 300px;
+  max-width: 300px;
 }
 
 .image:hover {
   opacity: 0.9;
   object-fit: cover;
   border-radius: 10%;
-  min-height: 400px;
-  max-height: 400px;
-  min-width: 400px;
-  max-width: 400px;
+  min-height: 300px;
+  max-height: 300px;
+  min-width: 300px;
+  max-width: 300px;
 }
 
 .galleryList{
   text-align: center;
+  justify-content: space-between;
   /* align-items: center; */
-  /* justify-content: space-between;
-  width: 33%; */
+  /* width: 33%; */
   display:flex;
   flex-flow: row wrap;
   img, p {
@@ -86,6 +86,7 @@ body {
   div {
     background-color: #0B486B;
     text-align: center;
+    //Below controls how less than 4 cells align
     /* flex: 1 1 auto; */
   }
 }
@@ -112,6 +113,7 @@ body {
   display: inline-block;
   flex: 1 1 50%;
   margin: auto;
+  font-weight: 700;
 }
 
 .photoName{
@@ -132,6 +134,30 @@ body {
 
 label{
   margin: 10px;
+}
+
+div.buttonOne {
+  background-color: #0B486B;
+  text-align: center;
+  display:inline-block;
+}
+
+div.buttonTwo {
+  background-color: #0B486B;
+  text-align: center;
+  display:inline-block;
+}
+
+form {
+  margin: 15px 0px 15px 0px;
+}
+
+input {
+  text-align: left;
+}
+
+textarea {
+  text-align: left;
 }
 
 /*=============================================
