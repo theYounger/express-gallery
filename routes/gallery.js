@@ -59,7 +59,7 @@ Router.route('/:id')
 /*  to see a single gallery photo */
 .get( isAuthenticated, (req, res) => {
   Gallery.findAll({
-    attributes: ['id', 'link']
+    attributes: ['id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
   })
   .then(function(image){
     const imageMap = image.map((element) => {
