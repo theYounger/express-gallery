@@ -38,25 +38,29 @@ body {
   body a:active {
     color: #0B486B; }
 
+h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700; }
+
 .insideCells {
   width: 25%; }
 
 .image {
   object-fit: cover;
-  border-radius: 10%;
   min-height: 300px;
   max-height: 300px;
   min-width: 300px;
-  max-width: 300px; }
+  max-width: 300px;
+  border-radius: 3%; }
 
 .image:hover {
   opacity: 0.9;
   object-fit: cover;
-  border-radius: 10%;
   min-height: 300px;
   max-height: 300px;
   min-width: 300px;
-  max-width: 300px; }
+  max-width: 300px;
+  border-radius: 3%; }
 
 .galleryList {
   text-align: center;
@@ -66,7 +70,6 @@ body {
   display: flex;
   flex-flow: row wrap; }
   .galleryList div {
-    background-color: #0B486B;
     text-align: center;
     /* flex: 1 1 auto; */ }
 
@@ -109,23 +112,92 @@ label {
   margin: 10px; }
 
 div.buttonOne {
-  background-color: #0B486B;
   text-align: center;
   display: inline-block; }
 
 div.buttonTwo {
-  background-color: #0B486B;
   text-align: center;
   display: inline-block; }
 
-form {
-  margin: 15px 0px 15px 0px; }
+div.row {
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
+  margin: auto; }
+
+div.col-md-4 {
+  text-align: center;
+  flex: 1 1 50%; }
+
+div.col-md-8 {
+  text-align: center;
+  flex: 1 1 50%; }
 
 input {
   text-align: left; }
 
 textarea {
   text-align: left; }
+
+.btnBlue {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #003399);
+  background-image: -moz-linear-gradient(top, #3498db, #003399);
+  background-image: -ms-linear-gradient(top, #3498db, #003399);
+  background-image: -o-linear-gradient(top, #3498db, #003399);
+  background-image: linear-gradient(to bottom, #3498db, #003399);
+  color: #ffffff;
+  font-size: 15px;
+  padding: 10px 20px 10px 20px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  border: 0px;
+  border-radius: 5%;
+  margin: 10px;
+  /* text-decoration: none; */ }
+
+.btnBlue:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #0033cc);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #0033cc);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #0033cc);
+  background-image: -o-linear-gradient(top, #3cb0fd, #0033cc);
+  background-image: linear-gradient(to bottom, #3cb0fd, #0033cc);
+  padding: 10px 20px 10px 20px;
+  border: 0px;
+  border-radius: 5%;
+  margin: 10px;
+  /* text-decoration: none; */ }
+
+.btnRed {
+  background: #cc0000;
+  background-image: -webkit-linear-gradient(top, #cc0000, #800000);
+  background-image: -moz-linear-gradient(top, #cc0000, #800000);
+  background-image: -ms-linear-gradient(top, #cc0000, #800000);
+  background-image: -o-linear-gradient(top, #cc0000, #800000);
+  background-image: linear-gradient(to bottom, #cc0000, #800000);
+  color: #ffffff;
+  font-size: 15px;
+  padding: 10px 20px 10px 20px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  border: 0px;
+  border-radius: 5%;
+  margin: 10px;
+  /* text-decoration: none; */ }
+
+.btnRed:hover {
+  background: #ff0000;
+  background-image: -webkit-linear-gradient(top, #ff0000, #990000);
+  background-image: -moz-linear-gradient(top, #ff0000, #990000);
+  background-image: -ms-linear-gradient(top, #ff0000, #990000);
+  background-image: -o-linear-gradient(top, #ff0000, #990000);
+  background-image: linear-gradient(to bottom, #ff0000, #990000);
+  padding: 10px 20px 10px 20px;
+  border: 0px;
+  border-radius: 5%;
+  margin: 10px;
+  /* text-decoration: none; */ }
 
 /*=============================================
 =                PICTURE PAGE                =

@@ -4,10 +4,17 @@ body
   div.wrapper
     div.aside.aside-1
       img(src="#{main}")
+      p By: #{author}
+      p Description: #{description}
+      p Added: #{createdAt}
+      p Updated: #{updatedAt}
       form(method='get' action='/gallery/#{mainId}/edit')
-        button(type='submit') EDIT
+        button.btnBlue(type='submit') EDIT
 
     div.aside.aside-2
-      img.co(src="#{co1}")
-      img.co(src="#{co2}")
-      img.co(src="#{co3}")
+      a(href='/gallery/#{co1id}')
+        img.co(src="#{co1}")
+      a(href='/gallery/#{co2id}')
+        img.co(src="#{co2}")
+      a(href='/gallery/#{co3id}')
+        img.co(src="#{co3}")

@@ -57,15 +57,23 @@ Router.get( '/new', ( req, res ) => {
 
 Router.route('/:id')
 /*  to see a single gallery photo */
-.get( isAuthenticated, (req, res) => {
+
+.get( (req, res) => {
+
+
   Gallery.findAll({
-    attributes: ['id', 'link']
+    attributes: ['id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
   })
   .then(function(image){
     const imageMap = image.map((element) => {
+
       return {
         link: element.dataValues.link,
-        id: element.dataValues.id
+        id: element.dataValues.id,
+        author: element.dataValues.author,
+        description: element.dataValues.description,
+        createdAt: element.dataValues.createdAt,
+        updatedAt: element.dataValues.updatedAt
       };
     });
     let mainIndex;
