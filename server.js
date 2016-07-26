@@ -83,9 +83,9 @@ app.get('/login', (req, res) => {
   res.render('./authTemplates/login');
 });
 
-app.get('/secret', isAuthenticated, (req, res) => {
+app.get('/gallery', isAuthenticated, (req, res) => {
   console.log('req.user', req.user);
-  res.render('./authTemplates/secret', { role: req.user.name });
+  res.render('./authTemplates/gallery', { role: req.user.name });
 });
 
 app.get('/logout', (req, res)=> {
@@ -94,7 +94,7 @@ app.get('/logout', (req, res)=> {
 });
 
 app.post('/login', passport.authenticate('local', {
-    successRedirect: '/secret',
+    successRedirect: '/gallery',
     failureRedirect: '/login',
 }));
 
