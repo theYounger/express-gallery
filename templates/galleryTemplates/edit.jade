@@ -23,8 +23,8 @@ form(action='/gallery/#{photoId}' method='POST')
       label(for='desc') Description
       textarea.form-control(id='desc' placeholder='entry field' name='description')
 
-div
-  button.btnBlue(type='submit') SEND
+  div
+    button.btnBlue(type='submit') SEND
 
 form(action='/gallery/#{photoId}' method='POST')
   input(type='hidden' value='DELETE' name='_method')
