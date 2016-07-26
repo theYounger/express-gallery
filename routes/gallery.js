@@ -2,8 +2,9 @@ const express = require('express');
 const Router = express.Router();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const midware = require('../lib/middleware');
+const previewFix = require('../lib/img_preview_fix');
 const db = require('../models');
+const Gallery = db.Gallery;
 
 /*==========================
 ==========MIDDLEWARE========*/
@@ -17,14 +18,19 @@ Router.use(methodOverride(function(req, res){
   }
 }));
 /*==========================*/
-
+const isAuthenticated = (req, res, next) => {
+  if(!req.isAuthenticated()) {
+    return res.redirect('/login');
+  }
+  return next();
+};
 
 /*----------  ROUTES  ----------*/
 Router.route('/')
 /* to view a list of gallery photos */
-  .get( ( req, res ) => {
+  .get( isAuthenticated, ( req, res ) => {
     console.log(req);
-  db.Gallery.findAll({
+  Gallery.findAll({
     attributes: ['id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
     })
     .then(function(gallery){
@@ -37,7 +43,7 @@ Router.route('/')
 
 /* to create a new gallery photo */
   .post( ( req, res ) => {
-    db.Gallery.create({
+    Gallery.create({
       author: req.body.author,
       link: req.body.link,
       description: req.body.description
@@ -51,12 +57,16 @@ Router.get( '/new', ( req, res ) => {
 
 Router.route('/:id')
 /*  to see a single gallery photo */
+
 .get( (req, res) => {
-  db.Gallery.findAll({
+
+
+  Gallery.findAll({
     attributes: ['id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
   })
   .then(function(image){
     const imageMap = image.map((element) => {
+
       return {
         link: element.dataValues.link,
         id: element.dataValues.id,
@@ -72,25 +82,26 @@ Router.route('/:id')
         mainIndex = ind;
       }
     });
-    midware(req, res, mainIndex, imageMap);
+    console.log(mainIndex, 'mainIndex');
+    previewFix(req, res, mainIndex, imageMap);
   });
 })
 /*  updates a single gallery photo identified by the :id param */
   .put( ( req, res ) => {
     let selectRow = {};
-    db.Gallery.findAll({where: {id: req.params.id}})
+    Gallery.findAll({where: {id: req.params.id}})
       .then (() => {
         for (var key in req.body) {
           selectRow[key] = req.body[key];
         }
-        db.Gallery.update(selectRow, {where: { id: req.params.id }})
+        Gallery.update(selectRow, {where: { id: req.params.id }})
           .then(function (result) {
           });
       });
   })
 /* to delete a single gallery photo identified by the :id param */
   .delete ( ( req, res ) => {
-    db.Gallery.destroy({where: {id: req.params.id}})
+    Gallery.destroy({where: {id: req.params.id}})
       .then(function(gallery){
         res.render('./galleryTemplates/index', {
           photos: gallery
@@ -100,7 +111,7 @@ Router.route('/:id')
 
 /*  to see a form to edit a gallery photo identified by the :id param */
 Router.get( '/:id/edit', ( req, res ) => {
-  db.Gallery.findAll(
+  Gallery.findAll(
     {where: {id: req.params.id}})
     .then(function(image){
       res.render('./galleryTemplates/edit', {
@@ -110,24 +121,4 @@ Router.get( '/:id/edit', ( req, res ) => {
     });
 });
 
-// function getPics(prox, req) {
-//   return function(ele, ind, arr) {
-//     var found = false;
-//     var count = 0;
-//     do {
-//       if(ele.id === req.params.id - count) {
-//         return ele
-//       }
-//     } while(!found);
-//     })
-//   };
-// }
-
 module.exports = Router;
-
-   // {where:
-   //  {
-   //    id: {
-   //      $between: [req.params.id, req.params.id + 1]
-   //    }
-   //  }
