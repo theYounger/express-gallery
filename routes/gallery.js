@@ -29,7 +29,6 @@ const isAuthenticated = (req, res, next) => {
 Router.route('/')
 /* to view a list of gallery photos */
   .get( isAuthenticated, ( req, res ) => {
-    console.log(req);
   Gallery.findAll({
     attributes: ['id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
     })
@@ -42,8 +41,9 @@ Router.route('/')
   })
 
 /* to create a new gallery photo */
-  .post( ( req, res ) => {
+  .post( isAuthenticated, ( req, res ) => {
     Gallery.create({
+      UserId: req.user.id,
       author: req.body.author,
       link: req.body.link,
       description: req.body.description
@@ -51,23 +51,21 @@ Router.route('/')
   });
 
 /*  to see a "new photo" form */
-Router.get( '/new', ( req, res ) => {
+Router.get( '/new', isAuthenticated, ( req, res ) => {
   res.render('./galleryTemplates/new');
 });
 
 Router.route('/:id')
 /*  to see a single gallery photo */
-
-.get( (req, res) => {
-
-
+.get( isAuthenticated, (req, res) => {
   Gallery.findAll({
-    attributes: ['id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
+    attributes: ['UserId', 'id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
   })
   .then(function(image){
+    console.log('image', image);
     const imageMap = image.map((element) => {
-
       return {
+        UserId: element.dataValues.UserId,
         link: element.dataValues.link,
         id: element.dataValues.id,
         author: element.dataValues.author,
@@ -82,12 +80,11 @@ Router.route('/:id')
         mainIndex = ind;
       }
     });
-    console.log(mainIndex, 'mainIndex');
     previewFix(req, res, mainIndex, imageMap);
   });
 })
 /*  updates a single gallery photo identified by the :id param */
-  .put( ( req, res ) => {
+  .put( isAuthenticated, ( req, res ) => {
     let selectRow = {};
     Gallery.findAll({where: {id: req.params.id}})
       .then (() => {
@@ -100,7 +97,7 @@ Router.route('/:id')
       });
   })
 /* to delete a single gallery photo identified by the :id param */
-  .delete ( ( req, res ) => {
+  .delete ( isAuthenticated, ( req, res ) => {
     Gallery.destroy({where: {id: req.params.id}})
       .then(function(gallery){
         res.render('./galleryTemplates/index', {
@@ -110,13 +107,14 @@ Router.route('/:id')
     });
 
 /*  to see a form to edit a gallery photo identified by the :id param */
-Router.get( '/:id/edit', ( req, res ) => {
+Router.get( '/:id/edit', isAuthenticated, ( req, res ) => {
   Gallery.findAll(
     {where: {id: req.params.id}})
     .then(function(image){
+      const imgData = image[0].dataValues;
       res.render('./galleryTemplates/edit', {
-        photoId: image[0].dataValues.id,
-        photoLink: image[0].dataValues.link
+        photoId: imgData.id,
+        photoLink: imgData.link
       });
     });
 });
