@@ -9,7 +9,7 @@ const gallery = require('./routes/gallery');
 const analyticTrack = require('./lib/analytics_track');
 const bcrypt = require('bcrypt');
 const encrypt = require('./lib/encrypt_pw');
-
+const flash = require('connect-flash');
 const User = db.User;
 
 /*==========================
@@ -30,9 +30,9 @@ app.use(bodyParser.json());
 app.use(session({ secret: 'cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(analyticTrack);
 app.use('/gallery', gallery);
+app.use(flash());
 
 
 passport.use(new LocalStrategy(
@@ -75,6 +75,12 @@ const isAuthenticated = (req, res, next) => {
   return next();
 };
 
+
+app.get('/', function(req, res){
+  // Get an array of flash messages by passing the key to req.flash()
+  res.render('index', { messages: req.flash(req.body) });
+});
+
 app.get('/register', (req, res) => {
   res.render('./authTemplates/register');
 });
@@ -96,7 +102,13 @@ app.get('/logout', (req, res)=> {
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/gallery',
     failureRedirect: '/login',
+    // failureFlash:
 }));
+
+app.get('/flash', (req, res) => {
+  req.flash('info', 'Flash is back!');
+  res.redirect('/');
+});
 
 /*=====  End of Section comment block  ======*/
 
