@@ -8,7 +8,9 @@ head
 body
   h1 Welcome!
   form(method="POST" action="/login")
+    label(for='username') Username
     input(type="text" name="username" placeholder="username")
+    label(for='password') Password
     input(type="password" name="password" placeholder="password")
     button.btnBlue(type="submit") LOGIN
 
