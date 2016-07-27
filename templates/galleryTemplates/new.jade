@@ -2,17 +2,15 @@ include ../partials/header
 
 h1 Add a photo!
 form(action='/gallery' method='post')
-  div.row
-    div.col-md-4
+  div
+    div
       label(for='author') Author
       input.form-control(type='text' id='author' placeholder='entry field' name='author')
 
-    div.col-md-4
       label(for='link') Link
       input.form-control(type='text' id='link' placeholder='entry field' name='link')
 
-  div.row
-    div.col-md-8
+    div
       label(for='desc') Description
       textarea.form-control(id='desc' placeholder='entry field' name='description')
 
