@@ -41,7 +41,6 @@ passport.use(new LocalStrategy(
         if(data.dataValues.password !== password) {
           return done(null, false, { message: 'Incorrect password.'});
         }
-
         return done(null, data);
       });
   }
@@ -81,6 +80,13 @@ app.post('/register', (req, res) => {
 app.get('/login', (req, res) => {
   res.render('./authTemplates/login');
 });
+
+
+/*app.get('/gallery', isAuthenticated, (req, res) => {
+  console.log('req.user', req.user);
+  res.render('./authTemplates/gallery', { role: req.user.name });
+});*/
+
 
 app.get('/logout', (req, res)=> {
   req.logout(); //clears cookies

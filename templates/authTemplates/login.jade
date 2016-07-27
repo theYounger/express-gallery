@@ -1,11 +1,17 @@
+include ../partials/header
+
 <!DOCTYPE html>
 html(lang="en")
 head
   meta(charset="UTF-8")
-  title Auth Demo
+  title ARCHiTEKT
 body
-  h1 Login form
+  h1 Welcome!
   form(method="POST" action="/login")
-    input(type="text" name="username")
-    input(type="password" name="password")
-    button(type="submit") Login
+    input(type="text" name="username" placeholder="username")
+    input(type="password" name="password" placeholder="password")
+    button.btnBlue(type="submit") LOGIN
+
+  div.buttonTwo
+  form.index(method="GET" action="/register")
+    button.btnBlue(type="submit") REGISTER
