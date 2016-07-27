@@ -6,14 +6,18 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const db = require('./models');
 const gallery = require('./routes/gallery');
-const authUser = require('./lib/middleware');
+const analyticTrack = require('./lib/analytics_track');
+const bcrypt = require('bcrypt');
+const encrypt = require('./lib/encrypt_pw');
 
 const User = db.User;
+
 /*==========================
 ==========JADE SET==========*/
 app.set('view engine', 'jade');
 app.set('views', './templates');
 /*============================*/
+
 app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,22 +31,30 @@ app.use(session({ secret: 'cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(analyticTrack);
 app.use('/gallery', gallery);
 
 
 passport.use(new LocalStrategy(
   (username,password,done) => {
+  let passHash;
     User.findOne({ where: { username: username }
 
     }).then ((data) => {
+      bcrypt.compare(password, data.dataValues.password, (err, res) => {
+
+        passHash = res;
+
         if(data.dataValues.username !== username) {
           return done(null, false, { message: 'Incorrect username.' });
         }
-        if(data.dataValues.password !== password) {
+        if(!passHash) {
           return done(null, false, { message: 'Incorrect password.'});
         }
         return done(null, data);
+
       });
+    });
   }
 ));
 
@@ -68,25 +80,12 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  User.create({
-    username: req.body.username,
-    password: req.body.password
-  })
-  .then((user) => {
-    res.json(user);
-  });
+  encrypt(req, 10, req.body.password);
 });
 
 app.get('/login', (req, res) => {
   res.render('./authTemplates/login');
 });
-
-
-/*app.get('/gallery', isAuthenticated, (req, res) => {
-  console.log('req.user', req.user);
-  res.render('./authTemplates/gallery', { role: req.user.name });
-});*/
-
 
 app.get('/logout', (req, res)=> {
   req.logout(); //clears cookies
@@ -107,3 +106,10 @@ const server = app.listen(3000, () => {
 });
 
 module.exports = isAuthenticated;
+
+
+// //load the hash password from the DB
+// bcrypt.compare(password, hash, (err, res) => {
+//   //res === true
+//   console.log(res);
+// });
