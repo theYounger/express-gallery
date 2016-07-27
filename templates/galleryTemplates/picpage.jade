@@ -8,8 +8,8 @@ body
       p Description: #{description}
       p Added: #{createdAt}
       p Updated: #{updatedAt}
-      form(method='get' action='/gallery/#{mainId}/edit')
-        button.btnBlue(type='submit') EDIT
+      if UserId === UserCurr
+        include ../partials/footer
 
     div.aside.aside-2
       a(href='/gallery/#{co1id}')

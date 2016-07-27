@@ -99,3 +99,5 @@ const server = app.listen(3000, () => {
   db.sequelize.sync();
   console.log('listening on port 3000');
 });
+
+module.exports = isAuthenticated;
