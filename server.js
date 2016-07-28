@@ -30,17 +30,17 @@ app.use(bodyParser.json());
 app.use(session({ secret: 'cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 app.use(analyticTrack);
 app.use('/gallery', gallery);
-app.use(flash());
 
 
 passport.use(new LocalStrategy(
   (username,password,done) => {
-  let passHash;
     User.findOne({ where: { username: username }
 
     }).then ((data) => {
+      let passHash;
       bcrypt.compare(password, data.dataValues.password, (err, res) => {
 
         passHash = res;
@@ -52,7 +52,6 @@ passport.use(new LocalStrategy(
           return done(null, false, { message: 'Incorrect password.'});
         }
         return done(null, data);
-
       });
     });
   }
@@ -75,12 +74,6 @@ const isAuthenticated = (req, res, next) => {
   return next();
 };
 
-
-app.get('/', function(req, res){
-  // Get an array of flash messages by passing the key to req.flash()
-  res.render('index', { messages: req.flash(req.body) });
-});
-
 app.get('/register', (req, res) => {
   res.render('./authTemplates/register');
 });
@@ -90,24 +83,19 @@ app.post('/register', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.render('./authTemplates/login');
-});
-
-app.get('/logout', (req, res)=> {
-  req.logout(); //clears cookies
-  res.redirect('/login');
+  res.render('authTemplates/login', { messages: req.flash('error')[0] });
 });
 
 //redirect upon authentication
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/gallery',
     failureRedirect: '/login',
-    // failureFlash:
+    failureFlash: true,
 }));
 
-app.get('/flash', (req, res) => {
-  req.flash('info', 'Flash is back!');
-  res.redirect('/');
+app.get('/logout', (req, res)=> {
+  req.logout(); //clears cookies
+  res.redirect('/login');
 });
 
 /*=====  End of Section comment block  ======*/
@@ -118,10 +106,3 @@ const server = app.listen(3000, () => {
 });
 
 module.exports = isAuthenticated;
-
-
-// //load the hash password from the DB
-// bcrypt.compare(password, hash, (err, res) => {
-//   //res === true
-//   console.log(res);
-// });

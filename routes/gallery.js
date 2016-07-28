@@ -6,6 +6,9 @@ const previewFix = require('../lib/img_preview_fix');
 const db = require('../models');
 const Gallery = db.Gallery;
 
+let imageTotal;
+let imagePartition;
+
 /*==========================
 ==========MIDDLEWARE========*/
 Router.use(bodyParser.json());
@@ -29,17 +32,16 @@ const isAuthenticated = (req, res, next) => {
 Router.route('/')
 /* to view a list of gallery photos */
   .get( isAuthenticated, ( req, res ) => {
-  Gallery.findAll({
-    attributes: ['id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
+    Gallery.findAll({
+      attributes: ['id', 'author', 'link'],
     })
-    .then(function(gallery){
+    .then( (gallery) => {
+      console.log('gallery length', gallery.length);
       res.render('./galleryTemplates/index', {
         photos: gallery,
-        /*photoId: req.params.id*/
       });
     });
   })
-
 /* to create a new gallery photo */
   .post( isAuthenticated, ( req, res ) => {
     Gallery.create({
@@ -47,8 +49,23 @@ Router.route('/')
       author: req.body.author,
       link: req.body.link,
       description: req.body.description
+    }).then( ()=> {
+      res.redirect('/gallery');
     });
   });
+
+Router.get( '/page/:page', isAuthenticated, (req, res) => {
+  Gallery.findAll({
+    offset: req.params.page * 3,
+    limit: 3,
+    attributes: ['id', 'author', 'link']
+  })
+  .then( (gallery) => {
+    res.render('./galleryTemplates/index', {
+      photos: gallery,
+    });
+  });
+});
 
 /*  to see a "new photo" form */
 Router.get( '/new', isAuthenticated, ( req, res ) => {
