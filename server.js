@@ -42,7 +42,7 @@ app.use(session({ secret: config.secret }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(analyticTrack);
+// app.use(analyticTrack);
 app.use('/gallery', gallery);
 
 
