@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -41,7 +43,7 @@ passport.use(new LocalStrategy(
     User.findOne({ where: { username: username }
 
     }).then ((data) => {
-      let passHash;
+      var passHash;
       bcrypt.compare(password, data.dataValues.password, (err, res) => {
 
         passHash = res;
