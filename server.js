@@ -9,6 +9,7 @@ const gallery = require('./routes/gallery');
 const analyticTrack = require('./lib/analytics_track');
 const bcrypt = require('bcrypt');
 const encrypt = require('./lib/encrypt_pw');
+const flash = require('connect-flash');
 const config = require('./config/config.json');
 const User = db.User;
 
@@ -30,17 +31,17 @@ app.use(bodyParser.json());
 app.use(session({ secret: config.secret }));
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(flash());
 app.use(analyticTrack);
 app.use('/gallery', gallery);
 
 
 passport.use(new LocalStrategy(
   (username,password,done) => {
-  let passHash;
     User.findOne({ where: { username: username }
 
     }).then ((data) => {
+      let passHash;
       bcrypt.compare(password, data.dataValues.password, (err, res) => {
 
         passHash = res;
@@ -52,7 +53,6 @@ passport.use(new LocalStrategy(
           return done(null, false, { message: 'Incorrect password.'});
         }
         return done(null, data);
-
       });
     });
   }
@@ -84,19 +84,20 @@ app.post('/register', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.render('./authTemplates/login');
-});
-
-app.get('/logout', (req, res)=> {
-  req.logout(); //clears cookies
-  res.redirect('/login');
+  res.render('authTemplates/login', { messages: req.flash('error')[0] });
 });
 
 //redirect upon authentication
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/gallery',
     failureRedirect: '/login',
+    failureFlash: true,
 }));
+
+app.get('/logout', (req, res)=> {
+  req.logout(); //clears cookies
+  res.redirect('/login');
+});
 
 /*=====  End of Section comment block  ======*/
 
@@ -106,10 +107,3 @@ const server = app.listen(3000, () => {
 });
 
 module.exports = isAuthenticated;
-
-
-// //load the hash password from the DB
-// bcrypt.compare(password, hash, (err, res) => {
-//   //res === true
-//   console.log(res);
-// });

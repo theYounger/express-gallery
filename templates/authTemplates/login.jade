@@ -6,7 +6,8 @@ head
   meta(charset="UTF-8")
   title ARCHiTEKT
 body
-  h1 Welcome!
+  h1 Login
+  p #{messages}
   form(method="POST" action="/login")
     label(for='username') Username
     input(type="text" name="username" placeholder="username")

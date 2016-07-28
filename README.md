@@ -1,6 +1,21 @@
 Express Gallery
 ===============
 
+*introduction*
+
+*getting started (quick start guide)*
+
+*pretend employer is looking at it*
+
+*tech stack*
+  *postgres sequelize etc*
+
+*what we learned, what we did, make a list*
+
+*built from scratch*
+
+*ready link*
+
 Express, Sequelize, HTML5, stored on PostgreSQL
 
 Use the Express, Sequelize, and *almost* any other library or templating engines you want to fulfill the requirements.
