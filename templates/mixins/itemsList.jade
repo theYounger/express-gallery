@@ -4,7 +4,7 @@ mixin galleryList(photos)
       div.insideCells
         a(href='/gallery/#{photo.id}')
           img(class="image" src="#{photo.link}")
-          p.photoName By: #{photo.author}
+          p.photoName #{photo.author}
           //- p.photoDescription #{photo.description}
-          p.photoDescription Added: #{photo.createdAt}
-          p.photoDate Updated: #{photo.updatedAt}
+          //- p.photoDescription Added: #{photo.createdAt}
+          //- p.photoDate Updated: #{photo.updatedAt}

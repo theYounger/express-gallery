@@ -6,6 +6,9 @@ const previewFix = require('../lib/img_preview_fix');
 const db = require('../models');
 const Gallery = db.Gallery;
 
+let imageTotal;
+let imagePartition;
+
 /*==========================
 ==========MIDDLEWARE========*/
 Router.use(bodyParser.json());
@@ -29,29 +32,43 @@ const isAuthenticated = (req, res, next) => {
 Router.route('/')
 /* to view a list of gallery photos */
   .get( isAuthenticated, ( req, res ) => {
-    console.log(req);
-  Gallery.findAll({
-    attributes: ['id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
+    Gallery.findAll({
+      attributes: ['id', 'author', 'link'],
     })
-    .then(function(gallery){
+    .then( (gallery) => {
+      console.log('gallery length', gallery.length);
       res.render('./galleryTemplates/index', {
         photos: gallery,
-        /*photoId: req.params.id*/
       });
     });
   })
-
 /* to create a new gallery photo */
-  .post( ( req, res ) => {
+  .post( isAuthenticated, ( req, res ) => {
     Gallery.create({
+      UserId: req.user.id,
       author: req.body.author,
       link: req.body.link,
       description: req.body.description
+    }).then( ()=> {
+      res.redirect('/gallery');
     });
   });
 
+Router.get( '/page/:page', isAuthenticated, (req, res) => {
+  Gallery.findAll({
+    offset: req.params.page * 3,
+    limit: 3,
+    attributes: ['id', 'author', 'link']
+  })
+  .then( (gallery) => {
+    res.render('./galleryTemplates/index', {
+      photos: gallery,
+    });
+  });
+});
+
 /*  to see a "new photo" form */
-Router.get( '/new', ( req, res ) => {
+Router.get( '/new', isAuthenticated, ( req, res ) => {
   res.render('./galleryTemplates/new');
 });
 
@@ -59,13 +76,19 @@ Router.route('/:id')
 /*  to see a single gallery photo */
 .get( isAuthenticated, (req, res) => {
   Gallery.findAll({
-    attributes: ['id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
+    attributes: ['UserId', 'id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
   })
-  .then(function(image){
+  .then( (image) => {
+    console.log('image', image);
     const imageMap = image.map((element) => {
       return {
+        UserId: element.dataValues.UserId,
         link: element.dataValues.link,
-        id: element.dataValues.id
+        id: element.dataValues.id,
+        author: element.dataValues.author,
+        description: element.dataValues.description,
+        createdAt: element.dataValues.createdAt,
+        updatedAt: element.dataValues.updatedAt
       };
     });
     let mainIndex;
@@ -74,27 +97,28 @@ Router.route('/:id')
         mainIndex = ind;
       }
     });
-    console.log(mainIndex, 'mainIndex');
     previewFix(req, res, mainIndex, imageMap);
   });
 })
 /*  updates a single gallery photo identified by the :id param */
-  .put( ( req, res ) => {
+  .put( isAuthenticated, ( req, res ) => {
     let selectRow = {};
     Gallery.findAll({where: {id: req.params.id}})
-      .then (() => {
+      .then ( () => {
         for (var key in req.body) {
           selectRow[key] = req.body[key];
         }
         Gallery.update(selectRow, {where: { id: req.params.id }})
-          .then(function (result) {
+          .then( (result) => {
           });
-      });
+      }).then( ()=> {
+      res.redirect('/gallery/' + req.params.id);
+    });
   })
 /* to delete a single gallery photo identified by the :id param */
-  .delete ( ( req, res ) => {
+  .delete ( isAuthenticated, ( req, res ) => {
     Gallery.destroy({where: {id: req.params.id}})
-      .then(function(gallery){
+      .then((gallery) => {
         res.render('./galleryTemplates/index', {
           photos: gallery
         });
@@ -102,13 +126,14 @@ Router.route('/:id')
     });
 
 /*  to see a form to edit a gallery photo identified by the :id param */
-Router.get( '/:id/edit', ( req, res ) => {
+Router.get( '/:id/edit', isAuthenticated, ( req, res ) => {
   Gallery.findAll(
     {where: {id: req.params.id}})
-    .then(function(image){
+    .then( (image) => {
+      const imgData = image[0].dataValues;
       res.render('./galleryTemplates/edit', {
-        photoId: image[0].dataValues.id,
-        photoLink: image[0].dataValues.link
+        photoId: imgData.id,
+        photoLink: imgData.link
       });
     });
 });

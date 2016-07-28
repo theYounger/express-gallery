@@ -2,13 +2,8 @@ include ../partials/header
 
 h1 Register!
 form(action='/register' method='post')
-  div
-    label(for='username') Username
-    input(type='text' name='username' placeholder='required field' id='username')
-
-  div
-    label(for='password') Password
-    input(type='text' name='password' placeholder='required field' id='password')
-
-  div.button
-    button.btn.btn-default(type='submit') Send
+  label(for='username') Username
+  input(type='text' name='username' placeholder='required field' id='username')
+  label(for='password') Password
+  input(type='password' name='password' placeholder='required field' id='password')
+  button.btnBlue(type='submit') SEND
