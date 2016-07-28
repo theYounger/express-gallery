@@ -9,10 +9,8 @@ const gallery = require('./routes/gallery');
 const analyticTrack = require('./lib/analytics_track');
 const bcrypt = require('bcrypt');
 const encrypt = require('./lib/encrypt_pw');
-
+const config = require('./config/config.json');
 const User = db.User;
-
-var pg = require('pg');
 
 /*==========================
 ==========JADE SET==========*/
@@ -29,7 +27,7 @@ app.use(bodyParser.json());
 =        CONFIG EXAMPLE RETOOLING             =
 =============================================*/
 
-app.use(session({ secret: 'cat' }));
+app.use(session({ secret: config.secret }));
 app.use(passport.initialize());
 app.use(passport.session());
 
