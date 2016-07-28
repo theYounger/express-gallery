@@ -80,7 +80,7 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  encrypt(req, 10, req.body.password);
+  encrypt(req, res, 10, req.body.password);
 });
 
 app.get('/login', (req, res) => {
