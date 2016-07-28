@@ -8,7 +8,7 @@ var env       = process.env.NODE_ENV || 'development';
 var db        = {};
 var config;
 
-if ( process.env.NODE_ENV == 'production' ) {
+if ( process.env.NODE_ENV ) {
   config = {
     'username': process.env.USERNAME,
     'password': process.env.PASSWORD,
