@@ -78,7 +78,7 @@ Router.route('/:id')
   Gallery.findAll({
     attributes: ['UserId', 'id', 'author', 'link', 'description', 'createdAt', 'updatedAt']
   })
-  .then(function(image){
+  .then( (image) => {
     console.log('image', image);
     const imageMap = image.map((element) => {
       return {
@@ -104,12 +104,12 @@ Router.route('/:id')
   .put( isAuthenticated, ( req, res ) => {
     let selectRow = {};
     Gallery.findAll({where: {id: req.params.id}})
-      .then (() => {
+      .then ( () => {
         for (var key in req.body) {
           selectRow[key] = req.body[key];
         }
         Gallery.update(selectRow, {where: { id: req.params.id }})
-          .then(function (result) {
+          .then( (result) => {
           });
       }).then( ()=> {
       res.redirect('/gallery/' + req.params.id);
@@ -118,7 +118,7 @@ Router.route('/:id')
 /* to delete a single gallery photo identified by the :id param */
   .delete ( isAuthenticated, ( req, res ) => {
     Gallery.destroy({where: {id: req.params.id}})
-      .then(function(gallery){
+      .then((gallery) => {
         res.render('./galleryTemplates/index', {
           photos: gallery
         });
@@ -129,7 +129,7 @@ Router.route('/:id')
 Router.get( '/:id/edit', isAuthenticated, ( req, res ) => {
   Gallery.findAll(
     {where: {id: req.params.id}})
-    .then(function(image){
+    .then( (image) => {
       const imgData = image[0].dataValues;
       res.render('./galleryTemplates/edit', {
         photoId: imgData.id,
