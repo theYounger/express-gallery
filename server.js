@@ -111,9 +111,16 @@ app.get('/logout', (req, res)=> {
 
 /*=====  End of Section comment block  ======*/
 
-const server = app.listen(3000, () => {
+
+let port = process.env.PORT || 3000;
+
+app.listen(port, function() {
   db.sequelize.sync();
-  console.log('listening on port 3000');
 });
+
+// const server = app.listen(3000, () => {
+//   db.sequelize.sync();
+//   console.log('listening on port 3000');
+// });
 
 module.exports = isAuthenticated;
