@@ -15,7 +15,7 @@ const flash = require('connect-flash');
 const User = db.User;
 var config;
 
-if ( process.env.NODE_ENV ) {
+if ( process.env.NODE_ENV == 'production' ) {
   config = {
     'secret': process.env.SECRET
   };
