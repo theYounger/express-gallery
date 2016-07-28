@@ -1,0 +1,20 @@
+include ../partials/header
+
+<!DOCTYPE html>
+html(lang="en")
+head
+  meta(charset="UTF-8")
+  title ARCHiTEKT
+body
+  h1 Login
+  p #{messages}
+  form(method="POST" action="/login")
+    label(for='username') Username
+    input(type="text" name="username" placeholder="username")
+    label(for='password') Password
+    input(type="password" name="password" placeholder="password")
+    button.btnBlue(type="submit") LOGIN
+
+  div.buttonTwo
+  form.index(method="GET" action="/register")
+    button.btnBlue(type="submit") REGISTER

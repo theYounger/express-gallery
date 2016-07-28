@@ -1,0 +1,10 @@
+mixin galleryList(photos)
+  .galleryList
+    each photo in photos
+      div.insideCells
+        a(href='/gallery/#{photo.id}')
+          img(class="image" src="#{photo.link}")
+          p.photoName #{photo.author}
+          //- p.photoDescription #{photo.description}
+          //- p.photoDescription Added: #{photo.createdAt}
+          //- p.photoDate Updated: #{photo.updatedAt}

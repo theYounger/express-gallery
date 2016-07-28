@@ -1,0 +1,18 @@
+include ../partials/header
+
+h1 Add a photo!
+form(action='/gallery' method='post')
+  div
+    div
+      label(for='author') Author
+      input.form-control(type='text' id='author' placeholder='entry field' name='author')
+
+      label(for='link') Link
+      input.form-control(type='text' id='link' placeholder='entry field' name='link')
+
+    div
+      label(for='desc') Description
+      textarea.form-control(id='desc' placeholder='entry field' name='description')
+
+    div
+      button.btnBlue(type='submit') SEND

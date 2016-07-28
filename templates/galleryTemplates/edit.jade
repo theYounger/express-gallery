@@ -1,0 +1,31 @@
+include ../partials/header
+
+body
+
+h1 Edit a photo here!
+
+img(src="#{photoLink}")
+
+form(action='/gallery/#{photoId}' method='POST')
+  input(type='hidden' value='PUT' name='_method')
+
+  div.row
+    div.col-md-4
+      label(for='author') Author
+      input.form-control(type='text' id='author' placeholder='entry field' name='author')
+
+  div.row
+    div.col-md-8
+      label(for='desc') Description
+      textarea.form-control(id='desc' placeholder='entry field' name='description')
+
+  div
+    button.btnBlue(type='submit') SEND
+
+form(action='/gallery/#{photoId}' method='POST')
+  input(type='hidden' value='DELETE' name='_method')
+  div
+    button.btnRed(type='submit') DELETE
+    //- value='#{editTitle}'
+    //- value='#{editAuthor}'
+    //- #{editBody}
