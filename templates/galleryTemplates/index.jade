@@ -4,12 +4,18 @@ include ../mixins/itemsList
 block gallContent
   body
     div
-      mixin galleryList(photos)
+      div.buttonAside
+        button.btnBlue(type='submit') <
+      div.buttonAside
+        //- button.btnBlue(type='submit') <
+        mixin galleryList(photos)
+      div.buttonAside
+        button.btnBlue(type='submit') >
 
 div
-  div.buttonOne
+  div.buttonAside
     form.index(method='get' action='/gallery/new')
       button.btnBlue(type='submit') NEW POST
-  div.buttonTwo
+  div.buttonAside
     form.index(method='get' action='/logout')
       button.btnRed(type='submit') LOGOUT

@@ -13,8 +13,6 @@ const flash = require('connect-flash');
 const config = require('./config/config.json');
 const User = db.User;
 
-
-
 /*==========================
 ==========JADE SET==========*/
 app.set('view engine', 'jade');
@@ -30,7 +28,7 @@ app.use(bodyParser.json());
 =        CONFIG EXAMPLE RETOOLING             =
 =============================================*/
 
-app.use(session({ secret: 'cat' }));
+app.use(session({ secret: config.secret }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -82,7 +80,7 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  encrypt(req, 10, req.body.password);
+  encrypt(req, res, 10, req.body.password);
 });
 
 app.get('/login', (req, res) => {

@@ -111,7 +111,9 @@ Router.route('/:id')
         Gallery.update(selectRow, {where: { id: req.params.id }})
           .then(function (result) {
           });
-      });
+      }).then( ()=> {
+      res.redirect('/gallery/' + req.params.id);
+    });
   })
 /* to delete a single gallery photo identified by the :id param */
   .delete ( isAuthenticated, ( req, res ) => {
