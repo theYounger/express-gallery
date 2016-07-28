@@ -12,8 +12,16 @@ const analyticTrack = require('./lib/analytics_track');
 const bcrypt = require('bcrypt');
 const encrypt = require('./lib/encrypt_pw');
 const flash = require('connect-flash');
-const config = require('./config/config.json');
 const User = db.User;
+var config;
+
+if ( process.env.NODE_ENV === 'production' ) {
+  config = {
+    'secret': process.env.SECRET
+  };
+} else {
+  config = require('./config/config.json');
+}
 
 /*==========================
 ==========JADE SET==========*/
