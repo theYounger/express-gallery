@@ -12,6 +12,8 @@ const encrypt = require('./lib/encrypt_pw');
 
 const User = db.User;
 
+var pg = require('pg');
+
 /*==========================
 ==========JADE SET==========*/
 app.set('view engine', 'jade');
