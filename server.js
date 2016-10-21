@@ -27,9 +27,8 @@ if (process.env.NODE_ENV === 'production') {
 ==========JADE SET==========*/
 app.set('view engine', 'jade');
 app.set('views', './templates');
-//  //////////////////////////
 
-// app.use(express.static('public'));
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(session({ secret: config.secret }));
@@ -37,7 +36,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use(analyticTrack);
-app.use('/', gallery); //test redirecting;
+app.use('/gallery', gallery);
 
 passport.use(new LocalStrategy(
   (username, password, done) => {
@@ -103,6 +102,7 @@ app.get('/logout', (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
+  console.log(port);
   db.sequelize.sync();
 });
 
