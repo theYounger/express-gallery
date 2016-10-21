@@ -1,7 +1,4 @@
-'use strict';
-
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -12,55 +9,50 @@ const analyticTrack = require('./lib/analytics_track');
 const bcrypt = require('bcrypt');
 const encrypt = require('./lib/encrypt_pw');
 const flash = require('connect-flash');
-const User = db.User;
-var config;
+const caseConfig = require('./config/config.json');
 
-if ( process.env.NODE_ENV == 'production' ) {
+const app = express();
+const User = db.User;
+
+let config;
+if (process.env.NODE_ENV === 'production') {
   config = {
-    'secret': process.env.SECRET
+    secret: process.env.SECRET,
   };
 } else {
-  config = require('./config/config.json');
+  config = caseConfig;
 }
 
-/*==========================
+/*= ========================
 ==========JADE SET==========*/
 app.set('view engine', 'jade');
 app.set('views', './templates');
-/*============================*/
+//  //////////////////////////
 
-app.use(express.static('public'));
-
+// app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-/*=============================================
-=        CONFIG EXAMPLE RETOOLING             =
-=============================================*/
-
 app.use(session({ secret: config.secret }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-// app.use(analyticTrack);
-app.use('/gallery', gallery);
-
+app.use(analyticTrack);
+app.use('/', gallery); //test redirecting;
 
 passport.use(new LocalStrategy(
-  (username,password,done) => {
-    User.findOne({ where: { username: username }
+  (username, password, done) => {
+    User.findOne({ where: { username },
 
-    }).then ((data) => {
-      var passHash;
+    }).then((data) => {
+      let passHash;
       bcrypt.compare(password, data.dataValues.password, (err, res) => {
-
         passHash = res;
 
-        if(data.dataValues.username !== username) {
+        if (data.dataValues.username !== username) {
           return done(null, false, { message: 'Incorrect username.' });
         }
-        if(!passHash) {
-          return done(null, false, { message: 'Incorrect password.'});
+        if (!passHash) {
+          return done(null, false, { message: 'Incorrect password.' });
         }
         return done(null, data);
       });
@@ -68,18 +60,14 @@ passport.use(new LocalStrategy(
   }
 ));
 
-//assign an id/cookie to browser for use after initial authentication
-passport.serializeUser((user, done) => {
-  return done(null, user);
-});
-//remove the id/cookie from browser
-passport.deserializeUser((user, done) => {
-  return done(null, user);
-});
+//  assign an id/cookie to browser for use after initial authentication
+passport.serializeUser((user, done) => done(null, user));
+//  remove the id/cookie from browser
+passport.deserializeUser((user, done) => done(null, user));
 
-//midware
+//  midware
 const isAuthenticated = (req, res, next) => {
-  if(!req.isAuthenticated()) {
+  if (!req.isAuthenticated()) {
     return res.redirect('/login');
   }
   return next();
@@ -97,30 +85,25 @@ app.get('/login', (req, res) => {
   res.render('authTemplates/login', { messages: req.flash('error')[0] });
 });
 
-//redirect upon authentication
+//  redirect upon authentication
 app.post('/login', passport.authenticate('local', {
-    successRedirect: '/gallery',
-    failureRedirect: '/login',
-    failureFlash: true,
+  successRedirect: '/gallery',
+  failureRedirect: '/login',
+  failureFlash: true,
 }));
 
-app.get('/logout', (req, res)=> {
-  req.logout(); //clears cookies
+app.get('/logout', (req, res) => {
+  req.logout(); //  clears cookies
   res.redirect('/login');
 });
 
-/*=====  End of Section comment block  ======*/
+/*= ====  End of Section comment block  ======*/
 
 
-let port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
-app.listen(port, function() {
+app.listen(port, () => {
   db.sequelize.sync();
 });
-
-// const server = app.listen(3000, () => {
-//   db.sequelize.sync();
-//   console.log('listening on port 3000');
-// });
 
 module.exports = isAuthenticated;

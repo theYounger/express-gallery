@@ -1,14 +1,14 @@
- module.exports = function(sequelize, DataTypes) {
-  var Gallery = sequelize.define("Gallery", {
+module.exports = (sequelize, DataTypes) => {
+  const Gallery = sequelize.define('Gallery', {
     author: DataTypes.STRING,
     link: DataTypes.STRING,
-    description: DataTypes.STRING
+    description: DataTypes.STRING,
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: (models) => {
         Gallery.belongsTo(models.User);
-      }
-    }
+      },
+    },
   });
   return Gallery;
 };

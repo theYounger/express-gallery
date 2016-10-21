@@ -1,13 +1,13 @@
-module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define("User", {
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define('User', {
     username: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: (models) => {
         User.hasMany(models.Gallery);
-      }
-    }
+      },
+    },
   });
 
   return User;
